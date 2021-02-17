@@ -8,7 +8,7 @@
 	@using (Html.BeginForm("EntraToken", "Home", FormMethod.Post))
 	{
 		<div></div>
-		<div>Acessar com o token gerado, pegar na base de dados</div>
+		<div>Acessar com o token gerado, pegar na base de dados, válido por 1 minuto</div>
 		<div></div>
 
 		@Html.AntiForgeryToken()

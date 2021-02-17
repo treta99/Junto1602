@@ -21,5 +21,6 @@ namespace Junto.Models
         public string strSenha { get; set; }
         public string strToken { get; set; }
         public Nullable<System.DateTime> dtCadastro { get; set; }
+        public Nullable<System.DateTime> dtGeracaoToken { get; set; }
     }
 }

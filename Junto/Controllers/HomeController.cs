@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.VisualBasic;
 
 namespace Junto.Controllers
 {
@@ -47,9 +48,11 @@ namespace Junto.Controllers
 
                 using (BdJunto bd = new BdJunto())
                 {
+                    //tenta ´buscar os dados com as informações passadas
                     var v = bd.tbUsuario.Where(a => a.strMatricula.Equals(u.strMatricula) && a.strSenha.Equals(u.strSenha)).FirstOrDefault();
                     if (v != null)
                     {
+                        //salva para depois usar
                         Session["usuID"] = v.idUsuario.ToString();
                         Session["nome"] = v.strNome.ToString();
                         return RedirectToAction("Index", "Home");
@@ -206,6 +209,7 @@ namespace Junto.Controllers
                 }
 
 
+                //atializa os dados
                 var usu = db.tbUsuario.FirstOrDefault(ua => ua.idUsuario == id);
                 usu.strMatricula = u.strMatricula;
                 usu.strEmail = u.strEmail;
@@ -251,8 +255,9 @@ namespace Junto.Controllers
                     if (v != null)
                     {
                         Random nuAle = new Random();
-
+                        //gera  um token e salva a data de geração, assim quando for consultar, validar conforme a data de geração
                         v.strToken = nuAle.Next(100000, 999999).ToString();
+                        v.dtGeracaoToken =  DateTime.Now;
                         db.Entry(v).State = System.Data.EntityState.Modified;
                         db.SaveChanges();
 
@@ -299,9 +304,12 @@ namespace Junto.Controllers
                     return View(u);
                 }
 
+                DateTime dataAtual = DateTime.Now.AddMinutes(-1);
+
                 using (BdJunto bd = new BdJunto())
                 {
-                    var v = bd.tbUsuario.Where(a => a.strMatricula.Equals(u.strMatricula) && a.strToken.Equals(u.strToken)).FirstOrDefault();
+                    //valida o usuário o token e a data de geração do token se ainda está válido
+                    var v = bd.tbUsuario.Where(a => a.strMatricula.Equals(u.strMatricula) && a.strToken.Equals(u.strToken) && a.dtGeracaoToken > dataAtual).FirstOrDefault();
                     if (v != null)
                     {
                         Session["usuID"] = v.idUsuario.ToString();

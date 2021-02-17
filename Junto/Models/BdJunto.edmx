@@ -16,6 +16,7 @@
           <Property Name="strSenha" Type="varchar" MaxLength="50" />
           <Property Name="strToken" Type="varchar" MaxLength="6" />
           <Property Name="dtCadastro" Type="datetime" />
+          <Property Name="dtGeracaoToken" Type="datetime" />
         </EntityType>
         <EntityContainer Name="sqlJuntoModelStoreContainer">
           <EntitySet Name="tbUsuario" EntityType="Self.tbUsuario" Schema="dbo" store:Type="Tables" />
@@ -38,6 +39,7 @@
           <Property Name="strSenha" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="strToken" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
           <Property Name="dtCadastro" Type="DateTime" Precision="3" />
+          <Property Name="dtGeracaoToken" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -48,6 +50,7 @@
           <EntitySetMapping Name="tbUsuario">
             <EntityTypeMapping TypeName="sqlJuntoModel.tbUsuario">
               <MappingFragment StoreEntitySet="tbUsuario">
+                <ScalarProperty Name="dtGeracaoToken" ColumnName="dtGeracaoToken" />
                 <ScalarProperty Name="dtCadastro" ColumnName="dtCadastro" />
                 <ScalarProperty Name="strToken" ColumnName="strToken" />
                 <ScalarProperty Name="strSenha" ColumnName="strSenha" />
